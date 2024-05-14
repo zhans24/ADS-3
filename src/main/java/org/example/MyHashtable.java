@@ -20,7 +20,7 @@ public class MyHashtable<K,V>{
 
     private int hash(K key){
         return Math.abs(key.hashCode())%DEFAULT;
-    }
+    }// to create index
 
     private class HashNode<K,V>{
         private K key;
@@ -43,17 +43,14 @@ public class MyHashtable<K,V>{
 
         if (curr==null)
             chain[hash(key)]=new HashNode<>(key, value);
-
         else{
             while (curr.next!=null){
                 if (curr.key==key){
                     curr.value=value;
                     return;
                 }
-
                 curr=curr.next;
             }
-
             curr.next=curr;
         }
         size++;
@@ -63,11 +60,21 @@ public class MyHashtable<K,V>{
         return null;
     }
 
-    public V getKey(K key){
+    public V get(K key){
+        HashNode<K,V> curr=chain[hash(key)];
+        while (curr!=null){
+            if (curr.key==key)
+                return curr.value;
+            curr=curr.next;
+        }
         return null;
     }
 
-    public K get(V value){
+    public K getKey(V value){
+        for (HashNode<K,V> node:chain) {
+            if (node.value==value)
+                return node.key;
+        }
         return null;
     }
 
