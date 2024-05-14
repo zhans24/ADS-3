@@ -8,8 +8,13 @@ import java.util.Hashtable;
 
 public class Main {
     public static void main(String[] args) throws JsonProcessingException {
-        Hashtable<Integer,String> h=new Hashtable<>();
-        System.out.println(h.g);
+        MyHashtable<Integer,String> arr=new MyHashtable<>();
+        arr.put(1, "a");
+        arr.put(1, "ass");
+        arr.put(1, "s");
+        arr.put(1, "c");
+        arr.put(1, "b");
+        System.out.println(arr);
     }
 
 }

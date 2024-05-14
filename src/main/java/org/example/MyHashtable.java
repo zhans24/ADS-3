@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Arrays;
+
 public class MyHashtable<K,V>{
     private HashNode<K,V> chain[];
     private int size;
@@ -30,11 +32,7 @@ public class MyHashtable<K,V>{
 
         @Override
         public String toString() {
-            return "HashNode{" +
-                    "key=" + key +
-                    ", value=" + value +
-                    ", next=" + next +
-                    '}';
+            return key+" : "+value;
         }
     }
 
@@ -56,6 +54,7 @@ public class MyHashtable<K,V>{
 
             curr.next=curr;
         }
+        size++;
     }
 
     public V remove(K key){
@@ -67,7 +66,13 @@ public class MyHashtable<K,V>{
     }
 
     public K get(V value){
-
         return null;
     }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(chain);
+    }
+
+
 }
