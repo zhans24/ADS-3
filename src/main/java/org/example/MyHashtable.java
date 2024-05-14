@@ -1,6 +1,8 @@
 package org.example;
 
 import java.util.Arrays;
+import java.util.Hashtable;
+import java.util.Iterator;
 
 public class MyHashtable<K,V>{
     private HashNode<K,V> chain[];
@@ -32,7 +34,7 @@ public class MyHashtable<K,V>{
 
         @Override
         public String toString() {
-            return key+" : "+value;
+            return key+":"+value;
         }
     }
 
@@ -71,7 +73,14 @@ public class MyHashtable<K,V>{
 
     @Override
     public String toString() {
-        return Arrays.toString(chain);
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        for (int i = 0; i < size; i++) {
+            sb.append(chain[i]);
+            if (i!=size-1)
+                sb.append(", ");
+        }
+        return sb.append("}").toString();
     }
 
 
