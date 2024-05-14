@@ -1,16 +1,12 @@
 package org.example;
 
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.Iterator;
-
 public class MyHashtable<K,V>{
     private  HashNode<K, V>[] chain;
     private int size;
     private int DEFAULT=11;
 
     public MyHashtable(){
-        this.chain=new HashNode[DEFAULT]; //bucket default size is 5
+        this.chain=new HashNode[DEFAULT];
     }
 
     public MyHashtable(int size){
@@ -106,6 +102,10 @@ public class MyHashtable<K,V>{
             }
         }
         return false;
+    }
+
+    public int size(){
+        return this.size;
     }
 
     @Override
