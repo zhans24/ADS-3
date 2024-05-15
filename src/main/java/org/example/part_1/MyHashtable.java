@@ -1,7 +1,11 @@
-package org.example;
+package org.example.part_1;
+
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Set;
 
 public class MyHashtable<K,V>{
-    private  HashNode<K, V>[] chain;
+    public  HashNode<K, V>[] chain;
     private int size;
     private int DEFAULT=11;
 
@@ -18,10 +22,10 @@ public class MyHashtable<K,V>{
         return Math.abs(key.hashCode())%DEFAULT;
     }// to create index
 
-    private static class HashNode<K,V>{
-        private K key;
-        private V value;
-        private HashNode<K,V> next;
+    public static class HashNode<K,V>{
+         K key;
+         V value;
+         HashNode<K,V> next;
 
         public HashNode(K key,V value){
             this.key=key;
@@ -30,26 +34,37 @@ public class MyHashtable<K,V>{
 
         @Override
         public String toString() {
-            return key+":"+value;
+            HashNode<K,V> temp = this;
+            StringBuilder sb = new StringBuilder();
+            sb.append("[");
+            while (temp != null) {
+                sb.append(temp.key + " : " + temp.value);
+                if (temp.next!=null)
+                    sb.append(", ");
+                temp = temp.next;
+            }
+            sb.append("]");
+            return sb.toString();
         }
     }
 
     public void put(K key,V value){
         HashNode<K,V> curr=chain[hash(key)];
-
         if (curr==null)
-            chain[hash(key)]= new HashNode<>(key, value);
-        else{
+            chain[hash(key)] = new HashNode<>(key, value);
+        else {
             while (curr.next!=null){
-                if (curr.key==key){
-                    curr.value=value;
+                if (curr.key==key) {
+                    curr.value = value;
                     return;
                 }
                 curr=curr.next;
             }
-            curr.next=curr;
+            curr.next=new HashNode<>(key,value);;
         }
-        size++;
+
+
+
     }
 
     public V remove(K key){
@@ -108,20 +123,40 @@ public class MyHashtable<K,V>{
         return this.size;
     }
 
+    public Set<K> keySet(){
+        Set<K> keySet=new HashSet<>();
+        for (int i = 0; i < DEFAULT; i++) {
+            HashNode<K,V> curr=chain[i];
+            while (curr!=null){
+                keySet.add(curr.key);
+                curr=curr.next;
+            }
+        }
+        return keySet;
+    }
+
+    public int getBucketSize(int index) {
+        int count = 0;
+        HashNode<K, V> current = chain[index];
+        while (current != null) {
+            count++;
+            current = current.next;
+        }
+        return count;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-
         sb.append("{");
         for (int i = 0; i < DEFAULT; i++) {
-            if (chain[i]!=null) {
+            if (chain[i] != null) {
                 sb.append(chain[i]);
-                sb.append(", ");
             }
+            sb.append("\n");
         }
-        sb.deleteCharAt(sb.lastIndexOf(", "));
-
-        return sb.append("}").toString();
+        sb.append("}");
+        return sb.toString();
     }
 
 }
