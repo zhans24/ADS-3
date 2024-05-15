@@ -10,13 +10,11 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args)  {
 
-        MyHashtable<Integer, String> hashtable = new MyHashtable<>();
-        hashtable.put(1, "a");
-        hashtable.put(2, "b");
-        hashtable.put(3, "c");
-        hashtable.put(4, "d");
-        System.out.println(hashtable);
-        System.out.println(hashtable.keySet());
+        BST<Integer,String> tree=new BST<>();
+        tree.put(1, "a");
+        tree.put(2, "b");
+        tree.put(3, "c");
+        System.out.println(tree);
 
     }
 
