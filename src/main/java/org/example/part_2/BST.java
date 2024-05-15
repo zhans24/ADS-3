@@ -1,34 +1,28 @@
 package org.example.part_2;
 
-import lombok.Data;
-import lombok.Getter;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BST<K extends Comparable<K>, V> {
-    @Getter
+    private Node root;
+
     private class Node {
         private K key;
         private V val;
         private Node left, right;
+
         public Node(K key, V val) {
             this.key = key;
             this.val = val;
         }
     }
 
-    private Node root;
-    private int size;
-
     public void put(K key, V val) {
         root = put(root, key, val);
     }
 
     private Node put(Node x, K key, V val) {
-        if (x == null) {
-            size++;
-            return new Node(key, val);
-        }
+        if (x == null) return new Node(key, val);
         int cmp = key.compareTo(x.key);
         if (cmp < 0) x.left = put(x.left, key, val);
         else if (cmp > 0) x.right = put(x.right, key, val);
@@ -68,10 +62,8 @@ public class BST<K extends Comparable<K>, V> {
     }
 
     private Node min(Node x) {
-        while (x.left != null) {
-            x = x.left;
-        }
-        return x;
+        if (x.left == null) return x;
+        return min(x.left);
     }
 
     private Node deleteMin(Node x) {
@@ -80,15 +72,16 @@ public class BST<K extends Comparable<K>, V> {
         return x;
     }
 
+    public Iterable<K> iterator() {
+        List<K> keys = new ArrayList<>();
+        inorder(root, keys);
+        return keys;
+    }
 
-    private void inorder(Node x) {
+    private void inorder(Node x, List<K> keys) {
         if (x == null) return;
-        inorder(x.left);
-        System.out.println("Key: " + x.getKey() + ", Value: " + x.getVal());
-        inorder(x.right);
+        inorder(x.left, keys);
+        keys.add(x.key);
+        inorder(x.right, keys);
     }
-    public void inorder(){
-        inorder(root);
-    }
-
 }
