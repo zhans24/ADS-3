@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import java.util.Set;
 
 public class MyHashtable<K,V>{
-    public  HashNode<K, V>[] chain;
+    private   HashNode<K, V>[] chain;
     private int size;
     private int DEFAULT=11;
 
@@ -23,9 +23,9 @@ public class MyHashtable<K,V>{
     }// to create index
 
     public static class HashNode<K,V>{
-         K key;
-         V value;
-         HashNode<K,V> next;
+        private K key;
+        private V value;
+        private HashNode<K,V> next;
 
         public HashNode(K key,V value){
             this.key=key;
@@ -123,6 +123,8 @@ public class MyHashtable<K,V>{
         return this.size;
     }
 
+    public int bucketCapacity(){return DEFAULT;}
+
     public Set<K> keySet(){
         Set<K> keySet=new HashSet<>();
         for (int i = 0; i < DEFAULT; i++) {
@@ -135,15 +137,6 @@ public class MyHashtable<K,V>{
         return keySet;
     }
 
-    public int getBucketSize(int index) {
-        int count = 0;
-        HashNode<K, V> current = chain[index];
-        while (current != null) {
-            count++;
-            current = current.next;
-        }
-        return count;
-    }
 
     @Override
     public String toString() {
