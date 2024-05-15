@@ -87,5 +87,8 @@ public class BST<K extends Comparable<K>, V> {
         System.out.println("Key: " + x.getKey() + ", Value: " + x.getVal());
         inorder(x.right);
     }
+    public void inorder(){
+        inorder(root);
+    }
 
 }

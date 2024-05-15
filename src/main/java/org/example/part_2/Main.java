@@ -14,7 +14,7 @@ public class Main {
         tree.put(1, "a");
         tree.put(2, "b");
         tree.put(3, "c");
-        System.out.println(tree);
+        tree.inorder();
 
     }
 
