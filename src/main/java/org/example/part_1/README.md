@@ -4,7 +4,7 @@ This project implements a custom hash table with chaining for handling collision
 
 # How to Run
 -Clone the repository from GitHub using the following command:
->git clone https://github.com/your-username/my-hashtable.git 
+>git clone https://github.com/zhans24/ADS-3 
 
 -Compile the TestHashtable.java file using a Java compiler:
 >javac MyHashTable.java
