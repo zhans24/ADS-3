@@ -20,7 +20,7 @@ public class TestHashtable {
 
 
         for(int i = 1; i < elementSize.length+1; i++){
-            System.out.println("Bucket " + i + ":"   + elementSize[i-1] + "elements");
+            System.out.println(i + "="   + elementSize[i-1]);
         }
 
     }
