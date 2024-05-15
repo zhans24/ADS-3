@@ -1,4 +1,4 @@
-package org.example;
+package org.example.part_2;
 
 import org.example.part_1.MyHashtable;
 import org.example.part_1.MyTestingClass;
