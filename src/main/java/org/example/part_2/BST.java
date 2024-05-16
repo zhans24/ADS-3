@@ -3,11 +3,13 @@ package org.example.part_2;
 import lombok.Getter;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Stack;
 
 public class BST<K extends Comparable<K>, V> {
     private Node root;
 
-    private class Node{
+    public class Node{
         @Getter
         private K key;
         @Getter
@@ -19,15 +21,6 @@ public class BST<K extends Comparable<K>, V> {
             this.value = value;
         }
 
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "key=" + key +
-                    ", value=" + value +
-                    ", left=" + left +
-                    ", right=" + right +
-                    '}';
-        }
     }
 
     private Node put(Node curr,K key,V value){
@@ -97,11 +90,39 @@ public class BST<K extends Comparable<K>, V> {
         root=remove(root, key);
     }
 
-    public Iterable<K> iterator(){
-        return new Iterable<K>() {
+    public Iterable<Node> iterator() {
+        Stack<Node> stack = new Stack<>();
+        return new Iterable<Node>() {
             @Override
-            public Iterator<K> iterator() {
+            public Iterator<Node> iterator() {
+                return new Iterator<>() {
+                    {
+                        pushLeft(root);
+                    }
 
+                    private void pushLeft(Node node) {
+                        while (node != null) {
+                            stack.push(node);
+                            node = node.left;
+                        }
+                    }
+
+                    @Override
+                    public boolean hasNext() {
+                        return !stack.isEmpty();
+                    }
+
+                    @Override
+                    public Node next() {
+                        if (!hasNext()) {
+                            throw new NoSuchElementException();
+                        }
+
+                        Node node = stack.pop();
+                        pushLeft(node.right);
+                        return node;
+                    }
+                };
             }
         };
     }
@@ -118,10 +139,4 @@ public class BST<K extends Comparable<K>, V> {
         return size(root);
     }
 
-    @Override
-    public String toString() {
-        return "BST{" +
-                "root=" + root +
-                '}';
-    }
 }
