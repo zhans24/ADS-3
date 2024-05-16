@@ -14,10 +14,12 @@ public class TestBST {
         bst.put(23, "ads");
         System.out.println("BEFORE:");
         System.out.println(bst);
+        System.out.println(bst.size());
         System.out.println();
-        bst.remove(23);
+        bst.remove(20);
         System.out.println("AFTER:");
         System.out.println(bst);
+        System.out.println(bst.size());
 
 
 

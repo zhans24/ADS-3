@@ -2,6 +2,8 @@ package org.example.part_2;
 
 import lombok.Getter;
 
+import java.util.Iterator;
+
 public class BST<K extends Comparable<K>, V> {
     private Node root;
 
@@ -64,25 +66,31 @@ public class BST<K extends Comparable<K>, V> {
     private Node remove(Node curr,K key){
         if (curr==null)
             return null;
+
         if (key.compareTo(curr.key)>0)
             curr.right=remove(curr.right, key);
+
         else if (key.compareTo(curr.key)<0)
             curr.left=remove(curr.left, key);
+
         else {
             if (curr.left==null)
                 return curr.right;
             else if (curr.right==null)
                 return curr.left;
             else {
-                curr=getMaxNode(curr.left);
-                curr.left=remove(curr.left, key);
+                Node newNode=getMaxNode(curr.left);
+
+                curr.value=newNode.value;
+                curr.key=newNode.key;
+                curr.left=remove(curr.left, newNode.key);
             }
         }
         return curr;
     }
 
     private Node getMaxNode(Node curr) {
-        return curr==null ? null : getMaxNode(curr.left);
+        return curr.right==null ? curr : getMaxNode(curr.right);
     }
 
     public void remove(K key){
@@ -90,7 +98,12 @@ public class BST<K extends Comparable<K>, V> {
     }
 
     public Iterable<K> iterator(){
-        return null;
+        return new Iterable<K>() {
+            @Override
+            public Iterator<K> iterator() {
+
+            }
+        };
     }
 
 
