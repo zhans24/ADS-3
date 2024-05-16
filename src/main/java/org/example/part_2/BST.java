@@ -9,6 +9,10 @@ import java.util.Stack;
 public class BST<K extends Comparable<K>, V> {
     private Node root;
 
+    /**
+     * Node class representing a node in the BST
+     */
+
     public class Node{
         @Getter
         private K key;
@@ -23,6 +27,13 @@ public class BST<K extends Comparable<K>, V> {
 
     }
 
+    /**
+     * Inserts a key-value pair into the BST
+     *
+     * @param key   The key to insert
+     * @param value The value associated with the key
+     */
+
     private Node put(Node curr,K key,V value){
         if (curr==null)
             return new Node(key,value);
@@ -36,11 +47,17 @@ public class BST<K extends Comparable<K>, V> {
         }
     }
 
-
+    //This method is so that the user can use
     public void put(K key,V value){
         root=put(root,key,value);
     }
 
+    /**
+     * Retrieves the value associated with a key from the BST
+     *
+     * @param key The key to search
+     * @return The value associated with the key, or null if key is not found
+     */
     public V get(K key) {
         Node curr=root;
 
@@ -55,6 +72,14 @@ public class BST<K extends Comparable<K>, V> {
 
         return null;
     }
+
+
+    /**
+     * Removes a key-value pair from the BST.
+     *
+     * @param key The key to remove
+     * @return The node associated with the key
+     */
 
     private Node remove(Node curr,K key){
         if (curr==null)
@@ -82,13 +107,27 @@ public class BST<K extends Comparable<K>, V> {
         return curr;
     }
 
+    /**
+     * Helper method to get the node with the maximum key from a given subtree.
+     *
+     * @param curr The root of the subtree
+     * @return The maximum node
+     */
+
     private Node getMaxNode(Node curr) {
         return curr.right==null ? curr : getMaxNode(curr.right);
     }
 
+    //This method is so that the user can use
     public void remove(K key){
         root=remove(root, key);
     }
+
+    /**
+     * Returns an Iterable for the BST that provides an Iterator to iterate over its elements
+     *
+     * @return The Iterable object for the BST
+     */
 
     public Iterable<Node> iterator() {
         Stack<Node> stack = new Stack<>();
@@ -128,6 +167,12 @@ public class BST<K extends Comparable<K>, V> {
     }
 
 
+    /**
+     * Recursively calculates  the size (number of nodes) of the BST.
+     *
+     * @param curr The current node being considered
+     * @return The size of the BST
+     */
     private int size(Node curr){
         if (curr==null)
             return 0;
@@ -135,6 +180,7 @@ public class BST<K extends Comparable<K>, V> {
             return 1+size(curr.left)+size(curr.right);
     }
 
+    // This method is so that the user can use
     public int size(){
         return size(root);
     }

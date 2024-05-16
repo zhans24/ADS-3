@@ -10,9 +10,10 @@ public class TestBST {
         bst.put(40, "aas");
         bst.put(5, "ads");
         bst.put(23, "ads");
+
         var tree=bst.iterator();
 
-        for (var element:tree) {
+        for (var element:tree) {  // Output elements by foreach loop using the iterator() method
             System.out.println("Key:"+element.getKey()+" Value:"+element.getValue());
         }
 
