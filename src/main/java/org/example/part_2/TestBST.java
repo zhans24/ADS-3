@@ -12,7 +12,6 @@ public class TestBST {
         bst.put(40, "aas");
         bst.put(5, "ads");
         bst.put(23, "ads");
-        bst.put(5, "ads");
         System.out.println("BEFORE:");
         System.out.println(bst);
         System.out.println();
