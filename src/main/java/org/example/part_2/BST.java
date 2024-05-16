@@ -1,87 +1,114 @@
 package org.example.part_2;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Getter;
 
 public class BST<K extends Comparable<K>, V> {
     private Node root;
 
-    private class Node {
+    private class Node{
+        @Getter
         private K key;
-        private V val;
-        private Node left, right;
+        @Getter
+        private V value;
+        private Node left,right;
 
-        public Node(K key, V val) {
+        public Node(K key, V value) {
             this.key = key;
-            this.val = val;
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "key=" + key +
+                    ", value=" + value +
+                    ", left=" + left +
+                    ", right=" + right +
+                    '}';
         }
     }
 
-    public void put(K key, V val) {
-        root = put(root, key, val);
+    private Node put(Node curr,K key,V value){
+        if (curr==null)
+            return new Node(key,value);
+        else {
+            if (curr.key.compareTo(key)<0){
+                curr.right=put(curr.right, key, value);
+            }else{
+                curr.left=put(curr.left,key,value);
+            }
+            return curr;
+        }
     }
 
-    private Node put(Node x, K key, V val) {
-        if (x == null) return new Node(key, val);
-        int cmp = key.compareTo(x.key);
-        if (cmp < 0) x.left = put(x.left, key, val);
-        else if (cmp > 0) x.right = put(x.right, key, val);
-        else x.val = val;
-        return x;
+
+    public void put(K key,V value){
+        root=put(root,key,value);
     }
 
     public V get(K key) {
-        Node x = root;
-        while (x != null) {
-            int cmp = key.compareTo(x.key);
-            if (cmp < 0) x = x.left;
-            else if (cmp > 0) x = x.right;
-            else return x.val;
+        Node curr=root;
+
+        while (curr!=null){
+            if (curr.key==key)
+                return curr.value;
+            else if (key.compareTo(curr.key)>0)
+                curr=curr.right;
+            else
+                curr=curr.left;
         }
+
         return null;
     }
 
-    public void delete(K key) {
-        root = delete(root, key);
-    }
-
-    private Node delete(Node x, K key) {
-        if (x == null) return null;
-        int cmp = key.compareTo(x.key);
-        if (cmp < 0) x.left = delete(x.left, key);
-        else if (cmp > 0) x.right = delete(x.right, key);
+    private Node remove(Node curr,K key){
+        if (curr==null)
+            return null;
+        if (key.compareTo(curr.key)>0)
+            curr.right=remove(curr.right, key);
+        else if (key.compareTo(curr.key)<0)
+            curr.left=remove(curr.left, key);
         else {
-            if (x.right == null) return x.left;
-            if (x.left == null) return x.right;
-            Node t = x;
-            x = min(t.right);
-            x.right = deleteMin(t.right);
-            x.left = t.left;
+            if (curr.left==null)
+                return curr.right;
+            else if (curr.right==null)
+                return curr.left;
+            else {
+                curr=getMaxNode(curr.left);
+                curr.left=remove(curr.left, key);
+            }
         }
-        return x;
+        return curr;
     }
 
-    private Node min(Node x) {
-        if (x.left == null) return x;
-        return min(x.left);
+    private Node getMaxNode(Node curr) {
+        return curr==null ? null : getMaxNode(curr.left);
     }
 
-    private Node deleteMin(Node x) {
-        if (x.left == null) return x.right;
-        x.left = deleteMin(x.left);
-        return x;
+    public void remove(K key){
+        root=remove(root, key);
     }
 
-    public Iterable<K> iterator() {
-        List<K> keys = new ArrayList<>();
-        inorder(root, keys);
-        return keys;
+    public Iterable<K> iterator(){
+        return null;
     }
 
-    private void inorder(Node x, List<K> keys) {
-        if (x == null) return;
-        inorder(x.left, keys);
-        keys.add(x.key);
-        inorder(x.right, keys);
+
+    private int size(Node curr){
+        if (curr==null)
+            return 0;
+        else
+            return 1+size(curr.left)+size(curr.right);
+    }
+
+    public int size(){
+        return size(root);
+    }
+
+    @Override
+    public String toString() {
+        return "BST{" +
+                "root=" + root +
+                '}';
     }
 }
